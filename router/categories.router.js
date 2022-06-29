@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router()
-const {isAdmin,isAdminorMember,isModerator,isMember}= require("../middlewares/authJwt")
+const {isAdmin,isAdminorMember,isModerator,isMember, verfyToken}= require("../middlewares/authJwt")
 const {
   Categori,
   sequelize
 } = require("../model/Model");
 
-router.post("/", isAdminorMember,async (req, res) => {
+router.post("/",verfyToken,isAdmin,async (req, res) => {
     try {
       const data = req.body;
       if (data) {

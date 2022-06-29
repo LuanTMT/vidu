@@ -1,4 +1,5 @@
 const express = require('express');
+const { verfyToken, isAdmin } = require('../middlewares/authJwt');
 const router = express.Router()
 const {
   User,
@@ -7,7 +8,7 @@ const {
 
 
 //read all user
-router.get("/v1/users", async (req, res) => {
+router.get("/v1/users",verfyToken,isAdmin, async (req, res) => {
   try {
     const users = await User.findAll();
     if (users) {

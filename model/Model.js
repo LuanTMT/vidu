@@ -45,6 +45,17 @@ const User = sequelize.define("user", {
 }, {
   timestamps:true,
 });
+const Categori = sequelize.define("categori",{   
+    categoryName:{
+        type:DataTypes.STRING,
+        validate:{      
+            max: 50,                
+            min: 3,   
+          }
+    },   
+}, {
+    timestamps:true,
+  });
 const Product = sequelize.define("product",{   
     productName:{
         type:DataTypes.STRING,
@@ -58,40 +69,28 @@ const Product = sequelize.define("product",{
 }, {
     timestamps:true,
   });
-const Categori = sequelize.define("categori",{   
-    categoryName:{
-        type:DataTypes.STRING,
-        validate:{      
-            max: 50,                
-            min: 3,   
-          }
-    },   
-}, {
-    timestamps:true,
-  });
-// User.hasMany(Product,{
+//   User.hasMany(Product,{
+//     as:"users",
 //     foreignKey:{
-//       name: "Users",},
-//     as:"user"
+//       name: "userId"}
+  
 //   })
-// Product.belongsTo(User,{
+
+//   Categori.hasMany(Product,{
+//     as:"categoris",
 //     foreignKey:{
-//       name: "Users",},
-//     as:"products",
-//   }
-// )
-// Categori.hasMany(Product,{
-//     foreignKey:{
-//       name: "Categoris",},
-//     as:"categori"
-//   })
-// Product.belongsTo(Categori,{
-//     foreignKey:{
-//       name: "Categoris",},
-//     as:"products",
-//   }
-// )
-User.sync({force:true});
-Product.sync({force:true});
-Categori.sync({force:true});
+//       name: "categoriId"}    
+//   })  
+//   Product.belongsTo(User,{ foreignKey:{
+//     name: "userId"}}
+//     )
+//   Product.belongsTo(Categori,{ foreignKey:{
+//     name: "categoriId"}}
+//   )
+
+// User.sync({force:true});
+// Categori.sync({force:true});
+// Product.sync({force:true});
+
+
 module.exports = {User,Product,Categori, sequelize}

@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router()
 const bodyParser = require("body-parser")
-const {isAdmin,isMember}= require("../middlewares/authJwt")
+const {isAdmin,isMember, verfyToken}= require("../middlewares/authJwt")
 const {
   Product,
   sequelize
 } = require("../model/Model");
 
-router.post("/v1/products", isAdmin, async (req, res) => {
+router.post("/v1/products",verfyToken, isAdmin, async (req, res) => {
     try {
       const data = req.body;
       if (data) {
@@ -24,7 +24,7 @@ router.post("/v1/products", isAdmin, async (req, res) => {
       res.json({ message: "server got error" });
     }    
   });
-router.get("/v1/products",isMember, async (req, res) => {
+router.get("/v1/products",verfyToken,isMember, async (req, res) => {
     try {
       const product = await Product.findAll();
       if (product) {
