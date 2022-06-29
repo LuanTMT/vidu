@@ -4,12 +4,18 @@ const bodyParser = require("body-parser")
 const {isAdmin,isMember, verfyToken}= require("../middlewares/authJwt")
 const {
   Product,
-  sequelize
+  sequelize,
+  User
 } = require("../model/Model");
 
-router.post("/v1/products",verfyToken, isAdmin, async (req, res) => {
-    try {
-      const data = req.body;
+router.post("/v1/users/:id/products",verfyToken, isMember, async (req, res) => {
+    try {    
+      const {id}= req.params;
+      const {productName}= req.body
+      const data = {        
+        productName : productName,
+        userId : id
+      };
       if (data) {
         const product = await Product.create(data);
         res.status(200);
@@ -24,10 +30,17 @@ router.post("/v1/products",verfyToken, isAdmin, async (req, res) => {
       res.json({ message: "server got error" });
     }    
   });
-router.get("/v1/products",verfyToken,isMember, async (req, res) => {
+router.get("/v1/users/:id/products",verfyToken,isMember, async (req, res) => {
     try {
-      const product = await Product.findAll();
-      if (product) {
+      const {id}= req.params;
+      const user = await User.findOne({where:{
+        id,
+      }});
+      const product = await Product.findAll({where:{
+        userId : id,
+      }})
+      const i = {...product,...user};
+      if (user) {
         res.status(200);
         res.json(product);
       }

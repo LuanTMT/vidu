@@ -60,7 +60,6 @@ const Product = sequelize.define("product",{
     productName:{
         type:DataTypes.STRING,
         allowNull:false,
-        unique:true,
         validate:{      
             max: 100,                
             min: 3,   
@@ -69,24 +68,23 @@ const Product = sequelize.define("product",{
 }, {
     timestamps:true,
   });
-//   User.hasMany(Product,{
-//     as:"users",
-//     foreignKey:{
-//       name: "userId"}
+  User.hasMany(Product,{
+    as:"users",
+    foreignKey:{
+      name: "userId"}
   
-//   })
-
-//   Categori.hasMany(Product,{
-//     as:"categoris",
-//     foreignKey:{
-//       name: "categoriId"}    
-//   })  
-//   Product.belongsTo(User,{ foreignKey:{
-//     name: "userId"}}
-//     )
-//   Product.belongsTo(Categori,{ foreignKey:{
-//     name: "categoriId"}}
-//   )
+  })
+  Categori.hasMany(Product,{
+    as:"categoris",
+    foreignKey:{
+      name: "categoriId"}    
+  })  
+  Product.belongsTo(User,{ foreignKey:{
+    name: "userId"}}
+    )
+  Product.belongsTo(Categori,{ foreignKey:{
+    name: "categoriId"}}
+  )
 
 // User.sync({force:true});
 // Categori.sync({force:true});

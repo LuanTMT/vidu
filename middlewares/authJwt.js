@@ -29,7 +29,6 @@ const verfyToken = (req,res,next)=>{
 //verify if it's admin permission
 const isAdmin = async(req,res,next)=>{
     const id = req.userID
-    console.log(req.userID);
     const user = await User.findOne({where:{id,}});  
     if (user.iam_role === "admin"){       
         return  next();
