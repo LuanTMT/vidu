@@ -8,13 +8,14 @@ const {
   User
 } = require("../model/Model");
 
-router.post("/v1/users/:id/products",verfyToken, isMember, async (req, res) => {
+router.post("/v1/users/:id/products",verfyToken, isAdmin, async (req, res) => {
     try {    
       const {id}= req.params;
-      const {productName}= req.body
+      const {productName,categoriId}= req.body
       const data = {        
-        productName : productName,
-        userId : id
+        productName,       
+        userId : id,
+        categoriId
       };
       if (data) {
         const product = await Product.create(data);
@@ -27,10 +28,10 @@ router.post("/v1/users/:id/products",verfyToken, isMember, async (req, res) => {
       }
     } catch (error) {
       res.status(500);
-      res.json({ message: "server got error" });
+      res.json({ message:error});
     }    
   });
-router.get("/v1/users/:id/products",verfyToken,isMember, async (req, res) => {
+router.get("/v1/users/:id/products",verfyToken, isMember, async (req, res) => {
     try {
       const {id}= req.params;
       const user = await User.findOne({where:{

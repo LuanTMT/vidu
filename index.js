@@ -7,6 +7,9 @@ const bodyParser = require("body-parser")
 
 const app = express()
 const port = 3000;
+// ADD THIS
+var cors = require('cors');
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(express.static("public/images"));
@@ -18,3 +21,14 @@ app.use("/api",authen);
 app.listen(port, () => {
    console.log(`Example app listening on port ${port}`)
 })
+// const readline = require("readline");
+// const rl = readline.createInterface({
+//     input : process.stdin,
+//     output: process.stdout
+// });
+// let query = "waht is yas";
+// rl.question(query,(as)=>{
+//     console.log((`helo ${as}~`));
+//     rl.close();
+// })
+// console.log(process.argv);
